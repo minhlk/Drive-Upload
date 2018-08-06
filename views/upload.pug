@@ -1,0 +1,6 @@
+extends layout
+
+block content
+  include nav.pug
+  form.dropzone(method='post', action='/upload', enctype='multipart/form-data')
+
