@@ -99,7 +99,17 @@ module.exports = function (io) {
     if (req.body) {
       //   console.log(req.body.token)
       client.oAuth2Client.getToken(req.body.token, (err, token) => {
-        // if (err) { res.send(err) ; return ;}
+        if (err) { 
+          console.log(err.response.data)
+          res.render('error', {
+            message: err.response.data.error,
+            error: {
+              status: err.code,
+              stack: err.response.data.error_description,
+            }
+          })
+          return ;
+        }
         client.oAuth2Client.setCredentials(token);
         // // Store the token to disk for later program executions
         fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
